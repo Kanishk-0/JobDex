@@ -20,7 +20,7 @@
                     </NavLink>
                 </li>
                 @*<a href="authentication/profile">Hello, @context.User.Identity.Name!</a>
-                    <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>*@
+                <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>*@
             </Authorized>
             <NotAuthorized>
                 <li class="nav-item px-3">
@@ -34,7 +34,7 @@
                     </NavLink>
                 </li>
                 @*<a href="authentication/register">Register</a>
-                    <a href="authentication/login">Log in</a>*@
+                <a href="authentication/login">Log in</a>*@
             </NotAuthorized>
         </AuthorizeView>
         @*<li class="nav-item px-3">
@@ -44,9 +44,15 @@
         </li>*@
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="userdetails">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> User Details
+                <span class="oi oi-list-rich" aria-hidden="true"></span> UserDetails
             </NavLink>
         </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="companies">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Company
+            </NavLink>
+        </li>
+
     </ul>
 </div>
 

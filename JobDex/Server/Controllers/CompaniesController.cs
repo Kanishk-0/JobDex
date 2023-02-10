@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using JobDex.Server.Data;
 using JobDex.Shared.Domain;
-using JobDex.Server.IRepository;
 
 namespace JobDex.Server.Controllers
 {
@@ -15,54 +14,53 @@ namespace JobDex.Server.Controllers
     [ApiController]
     public class CompaniesController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _context;
 
-        public CompaniesController(IUnitOfWork unitOfWork)
+        public CompaniesController(ApplicationDbContext context)
         {
-            _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         // GET: api/Companies
         [HttpGet]
-        public async Task<IActionResult> GetCompanies()
+        public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
         {
-            var Companies = await _unitOfWork.Companies.GetAll();
-            return Ok(Companies);
+            return await _context.Companies.ToListAsync();
         }
 
         // GET: api/Companies/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCompanies(int id)
+        public async Task<ActionResult<Company>> GetCompany(int id)
         {
-            var company = await _unitOfWork.Companies.Get(q => q.Id == id);
+            var company = await _context.Companies.FindAsync(id);
 
             if (company == null)
             {
                 return NotFound();
             }
 
-            return Ok(company);
+            return company;
         }
 
         // PUT: api/Companies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCompanies(int id, Company Companies)
+        public async Task<IActionResult> PutCompany(int id, Company company)
         {
-            if (id != Companies.Id)
+            if (id != company.Id)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Companies.Update(Companies);
+            _context.Entry(company).State = EntityState.Modified;
 
             try
             {
-                await _unitOfWork.Save(HttpContext);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await CompanyExists(id))
+                if (!CompanyExists(id))
                 {
                     return NotFound();
                 }
@@ -78,34 +76,33 @@ namespace JobDex.Server.Controllers
         // POST: api/Companies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Company>> PostCompanies(Company Companies)
+        public async Task<ActionResult<Company>> PostCompany(Company company)
         {
-            await _unitOfWork.Companies.Insert(Companies);
-            await _unitOfWork.Save(HttpContext);
+            _context.Companies.Add(company);
+            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCompanies", new { id = Companies.Id }, Companies);
+            return CreatedAtAction("GetCompany", new { id = company.Id }, company);
         }
 
         // DELETE: api/Companies/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCompanies(int id)
+        public async Task<IActionResult> DeleteCompany(int id)
         {
-            var Companies = await _unitOfWork.Companies.Get(q => q.Id == id);
-            if (Companies == null)
+            var company = await _context.Companies.FindAsync(id);
+            if (company == null)
             {
                 return NotFound();
             }
 
-            await _unitOfWork.Companies.Delete(id);
-            await _unitOfWork.Save(HttpContext);
+            _context.Companies.Remove(company);
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private async Task<bool> CompanyExists(int id)
+        private bool CompanyExists(int id)
         {
-            var company = await _unitOfWork.Companies.Get(q => q.Id == id);
-            return company != null;
+            return _context.Companies.Any(e => e.Id == id);
         }
     }
 }

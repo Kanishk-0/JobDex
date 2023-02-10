@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobDex.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230208141442_databaseupdate")]
-    partial class databaseupdate
+    [Migration("20230208225012_Testing")]
+    partial class Testing
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -232,8 +232,8 @@ namespace JobDex.Server.Migrations
                         {
                             Id = 1,
                             CreatedBy = "User",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 14, 41, 746, DateTimeKind.Local).AddTicks(1505),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 14, 41, 746, DateTimeKind.Local).AddTicks(1510),
+                            DateCreated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(9974),
+                            DateUpdated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(9981),
                             JobsId = 1,
                             StaffDetailsId = 1,
                             UpdatedBy = "User",
@@ -243,8 +243,8 @@ namespace JobDex.Server.Migrations
                         {
                             Id = 2,
                             CreatedBy = "User",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 14, 41, 746, DateTimeKind.Local).AddTicks(1512),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 14, 41, 746, DateTimeKind.Local).AddTicks(1513),
+                            DateCreated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(9985),
+                            DateUpdated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(9986),
                             JobsId = 2,
                             StaffDetailsId = 2,
                             UpdatedBy = "User",
@@ -300,8 +300,8 @@ namespace JobDex.Server.Migrations
                             CompanyNo = 64727936,
                             CompanyPwd = "googleisgreat",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(4813),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(4819),
+                            DateCreated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(2457),
+                            DateUpdated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(2463),
                             UpdatedBy = "System"
                         },
                         new
@@ -313,8 +313,8 @@ namespace JobDex.Server.Migrations
                             CompanyNo = 64724336,
                             CompanyPwd = "Facebook1!",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(4822),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(4823),
+                            DateCreated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(2467),
+                            DateUpdated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(2468),
                             UpdatedBy = "System"
                         });
                 });
@@ -368,8 +368,8 @@ namespace JobDex.Server.Migrations
                             Id = 1,
                             CompanyId = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(8818),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(8824),
+                            DateCreated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(6430),
+                            DateUpdated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(6435),
                             JobDesc = "job",
                             JobIndusty = "IT",
                             JobName = "Software Engineer",
@@ -382,8 +382,8 @@ namespace JobDex.Server.Migrations
                             Id = 2,
                             CompanyId = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(8827),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(8828),
+                            DateCreated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(6438),
+                            DateUpdated = new DateTime(2023, 2, 9, 6, 50, 11, 683, DateTimeKind.Local).AddTicks(6439),
                             JobDesc = "job",
                             JobIndusty = "Tech",
                             JobName = "Software Engineer",
@@ -433,8 +433,8 @@ namespace JobDex.Server.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(1578),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(1584),
+                            DateCreated = new DateTime(2023, 2, 9, 6, 50, 11, 682, DateTimeKind.Local).AddTicks(8479),
+                            DateUpdated = new DateTime(2023, 2, 9, 6, 50, 11, 682, DateTimeKind.Local).AddTicks(8486),
                             StaffEmail = "Marcus5513@gmail.com",
                             StaffName = "Marcus",
                             StaffNo = 91696420,
@@ -445,8 +445,8 @@ namespace JobDex.Server.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(1588),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 14, 41, 745, DateTimeKind.Local).AddTicks(1588),
+                            DateCreated = new DateTime(2023, 2, 9, 6, 50, 11, 682, DateTimeKind.Local).AddTicks(8489),
+                            DateUpdated = new DateTime(2023, 2, 9, 6, 50, 11, 682, DateTimeKind.Local).AddTicks(8490),
                             StaffEmail = "Jyaie@gmail.com",
                             StaffName = "Jyaie",
                             StaffNo = 91683495,
@@ -507,8 +507,8 @@ namespace JobDex.Server.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 14, 41, 743, DateTimeKind.Local).AddTicks(4964),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 14, 41, 744, DateTimeKind.Local).AddTicks(1079),
+                            DateCreated = new DateTime(2023, 2, 9, 6, 50, 11, 680, DateTimeKind.Local).AddTicks(9413),
+                            DateUpdated = new DateTime(2023, 2, 9, 6, 50, 11, 681, DateTimeKind.Local).AddTicks(6522),
                             UpdatedBy = "System",
                             UserAddress = "Punggol",
                             UserCStatus = "PR",
@@ -523,8 +523,8 @@ namespace JobDex.Server.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 2, 8, 22, 14, 41, 744, DateTimeKind.Local).AddTicks(1802),
-                            DateUpdated = new DateTime(2023, 2, 8, 22, 14, 41, 744, DateTimeKind.Local).AddTicks(1806),
+                            DateCreated = new DateTime(2023, 2, 9, 6, 50, 11, 681, DateTimeKind.Local).AddTicks(7315),
+                            DateUpdated = new DateTime(2023, 2, 9, 6, 50, 11, 681, DateTimeKind.Local).AddTicks(7319),
                             UpdatedBy = "System",
                             UserAddress = "PasirRis",
                             UserCStatus = "Citizen",

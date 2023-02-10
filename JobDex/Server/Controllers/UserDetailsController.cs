@@ -32,7 +32,7 @@ namespace JobDex.Server.Controllers
 
         // GET: api/UserDetails/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserDetails(int id)
+        public async Task<IActionResult> GetUserDetail(int id)
         {
             var userdetail = await _unitOfWork.UserDetails.Get(q => q.Id == id);
 
@@ -47,14 +47,14 @@ namespace JobDex.Server.Controllers
         // PUT: api/UserDetails/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserDetails(int id, UserDetails userDetails)
+        public async Task<IActionResult> PutUserDetail(int id, UserDetails userdetail)
         {
-            if (id != userDetails.Id)
+            if (id != userdetail.Id)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.UserDetails.Update(userDetails);
+            _unitOfWork.UserDetails.Update(userdetail);
 
             try
             {
@@ -78,20 +78,20 @@ namespace JobDex.Server.Controllers
         // POST: api/UserDetails
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserDetails>> PostUserDetails(UserDetails userDetails)
+        public async Task<ActionResult<UserDetails>> PostUserDetails(UserDetails userdetail)
         {
-            await _unitOfWork.UserDetails.Insert(userDetails);
+            await _unitOfWork.UserDetails.Insert(userdetail);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetUserDetails", new { id = userDetails.Id }, userDetails);
+            return CreatedAtAction("GetUserDetails", new { id = userdetail.Id }, userdetail);
         }
 
         // DELETE: api/UserDetails/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserDetails(int id)
         {
-            var userDetails = await _unitOfWork.UserDetails.Get(q => q.Id == id);
-            if (userDetails == null)
+            var userdetail = await _unitOfWork.UserDetails.Get(q => q.Id == id);
+            if (userdetail == null)
             {
                 return NotFound();
             }
@@ -104,8 +104,8 @@ namespace JobDex.Server.Controllers
 
         private async Task<bool> UserDetailExists(int id)
         {
-            var userDetail = await _unitOfWork.UserDetails.Get(q => q.Id == id);
-            return userDetail != null;
+            var userdetail = await _unitOfWork.UserDetails.Get(q => q.Id == id);
+            return userdetail != null;
         }
     }
 }

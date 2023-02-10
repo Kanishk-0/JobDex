@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using JobDex.Server.Data;
 using JobDex.Shared.Domain;
-using JobDex.Server.IRepository;
 
 namespace JobDex.Server.Controllers
 {
@@ -15,54 +14,53 @@ namespace JobDex.Server.Controllers
     [ApiController]
     public class StaffDetailsController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _context;
 
-        public StaffDetailsController(IUnitOfWork unitOfWork)
+        public StaffDetailsController(ApplicationDbContext context)
         {
-            _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         // GET: api/StaffDetails
         [HttpGet]
-        public async Task<IActionResult> GetStaffDetails()
+        public async Task<ActionResult<IEnumerable<StaffDetails>>> GetStaffDetails()
         {
-            var StaffDetails = await _unitOfWork.StaffDetails.GetAll();
-            return Ok(StaffDetails);
+            return await _context.StaffDetails.ToListAsync();
         }
 
         // GET: api/StaffDetails/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetStaffDetails(int id)
+        public async Task<ActionResult<StaffDetails>> GetStaffDetails(int id)
         {
-            var staffDetail = await _unitOfWork.StaffDetails.Get(q => q.Id == id);
+            var staffDetails = await _context.StaffDetails.FindAsync(id);
 
-            if (staffDetail == null)
+            if (staffDetails == null)
             {
                 return NotFound();
             }
 
-            return Ok(staffDetail);
+            return staffDetails;
         }
 
         // PUT: api/StaffDetails/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStaffDetails(int id, StaffDetails StaffDetails)
+        public async Task<IActionResult> PutStaffDetails(int id, StaffDetails staffDetails)
         {
-            if (id != StaffDetails.Id)
+            if (id != staffDetails.Id)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.StaffDetails.Update(StaffDetails);
+            _context.Entry(staffDetails).State = EntityState.Modified;
 
             try
             {
-                await _unitOfWork.Save(HttpContext);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await StaffDetailExists(id))
+                if (!StaffDetailsExists(id))
                 {
                     return NotFound();
                 }
@@ -78,34 +76,33 @@ namespace JobDex.Server.Controllers
         // POST: api/StaffDetails
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<StaffDetails>> PostStaffDetails(StaffDetails StaffDetails)
+        public async Task<ActionResult<StaffDetails>> PostStaffDetails(StaffDetails staffDetails)
         {
-            await _unitOfWork.StaffDetails.Insert(StaffDetails);
-            await _unitOfWork.Save(HttpContext);
+            _context.StaffDetails.Add(staffDetails);
+            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStaffDetails", new { id = StaffDetails.Id }, StaffDetails);
+            return CreatedAtAction("GetStaffDetails", new { id = staffDetails.Id }, staffDetails);
         }
 
         // DELETE: api/StaffDetails/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStaffDetails(int id)
         {
-            var StaffDetails = await _unitOfWork.StaffDetails.Get(q => q.Id == id);
-            if (StaffDetails == null)
+            var staffDetails = await _context.StaffDetails.FindAsync(id);
+            if (staffDetails == null)
             {
                 return NotFound();
             }
 
-            await _unitOfWork.StaffDetails.Delete(id);
-            await _unitOfWork.Save(HttpContext);
+            _context.StaffDetails.Remove(staffDetails);
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private async Task<bool> StaffDetailExists(int id)
+        private bool StaffDetailsExists(int id)
         {
-            var staffDetail = await _unitOfWork.StaffDetails.Get(q => q.Id == id);
-            return staffDetail != null;
+            return _context.StaffDetails.Any(e => e.Id == id);
         }
     }
 }

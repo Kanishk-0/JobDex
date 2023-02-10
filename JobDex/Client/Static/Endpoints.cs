@@ -10,7 +10,9 @@ namespace JobDex.Client.Static
         private static readonly string Prefix = "api";
 
         public static readonly string UserDetailsEndpoint = $"{Prefix}/userdetails";
-        public static readonly string JobEndpoint = $"{Prefix}/jobs";
+        public static readonly string JobsEndpoint = $"{Prefix}/jobs";
+        public static readonly string ApplicationsEndpoint = $"{Prefix}/applications";
+        public static readonly string CompaniesEndpoint = $"{Prefix}/companies";
 
     }
 }
