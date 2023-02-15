@@ -6,6 +6,13 @@
 <h3 class="card-title">UserDetails</h3>
 <br />
 
+<a href="/userdetails/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Add New User
+</a>
+<br />
+<br />
+
 @if (UserDetails == null)
 {
     <div class="alert alert-info">Loading Users</div>
@@ -16,6 +23,8 @@ else
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Email</th>
+                <th>Number</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -24,6 +33,8 @@ else
             {
                 <tr>
                     <td>@userDetails.UserName</td>
+                    <td>@userDetails.UserEmail</td>
+                    <td>@userDetails.UserNo</td>
                     <td>
                         <a href="/userdetails/view/@userDetails.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>

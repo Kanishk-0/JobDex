@@ -1,0 +1,51 @@
+﻿@page "/userdetails/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Create</h3>
+<hr />
+<br />
+
+<EditForm Model="@userDetail" OnValidSubmit="CreateUser">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Name: </label>
+        <div>
+            <InputText @bind-Value="userDetail.UserName" class="form-control" />
+            <ValidationMessage For="@(() => userDetail.UserName)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Email: </label>
+        <div>
+            <InputText @bind-Value="userDetail.UserEmail" class="form-control" />
+            <ValidationMessage For="@(() => userDetail.UserEmail)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Number: </label>
+        <div>
+            <InputNumber @bind-Value="userDetail.UserNo" class="form-control" />
+            <ValidationMessage For="@(() => userDetail.UserNo)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create User
+    </button>
+
+
+</EditForm>
+
+@code {
+    UserDetails userDetail = new UserDetails();
+
+    private async Task CreateUser()
+    {
+        await _client.PostAsJsonAsync(Endpoints.UserDetailsEndpoint, userDetail);
+        _navManager.NavigateTo("/userdetails/");
+    }
+
+}

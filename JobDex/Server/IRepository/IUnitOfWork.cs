@@ -11,11 +11,11 @@ namespace JobDex.Server.IRepository
     public interface IUnitOfWork : IDisposable
     {
         Task Save(HttpContext httpContext);
-        IGenericRepository<UserDetails> UserDetails { get; }
-        IGenericRepository<StaffDetails> StaffDetails { get; }
-        IGenericRepository<Applications> Applications { get; }
-        IGenericRepository<Company> Companies { get; }
-        IGenericRepository<Jobs> Jobs { get; }
+        IGenericRepository<UserDetails> UserDetailss { get; }
+        IGenericRepository<StaffDetails> StaffDetailss { get; }
+        IGenericRepository<Applications> Applicationss { get; }
+        IGenericRepository<Company> Companiess { get; }
+        IGenericRepository<Jobs> Jobss { get; }
     }
 
 }

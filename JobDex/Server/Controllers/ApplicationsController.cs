@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using JobDex.Server.Data;
 using JobDex.Shared.Domain;
+using JobDex.Server.IRepository;
 
 namespace JobDex.Server.Controllers
 {
@@ -14,32 +15,43 @@ namespace JobDex.Server.Controllers
     [ApiController]
     public class ApplicationsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        //refactored
+        //private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ApplicationsController(ApplicationDbContext context)
+        //public ApplicationsController(ApplicationDbContext context)
+        public ApplicationsController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
+            //_context = context;
         }
 
         // GET: api/Applications
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Applications>>> GetApplications()
+        //refactored
+        //public async Task<ActionResult<IEnumerable<Applications>>> GetApplicationss()
+        public async Task<ActionResult> GetApplicationss()
         {
-            return await _context.Applications.ToListAsync();
+            //return await _context.Applicationss.ToListAsync();
+            var Applicationss = await _unitOfWork.Applicationss.GetAll();
+            return Ok(Applicationss);
         }
 
         // GET: api/Applications/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Applications>> GetApplications(int id)
+        //refactored
+        //public async Task<ActionResult<Applications>> GetApplications(int id)
+        public async Task<ActionResult> GetApplications(int id)
         {
-            var Applications = await _context.Applications.FindAsync(id);
+            //var Applications = await _context.Applicationss.FindAsync(id);
+            var Applications = await _unitOfWork.Applicationss.Get(q => q.Id == id);
 
             if (Applications == null)
             {
                 return NotFound();
             }
-
-            return Applications;
+            //refactored
+            return Ok(Applications);
         }
 
         // PUT: api/Applications/5
@@ -51,16 +63,20 @@ namespace JobDex.Server.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(Applications).State = EntityState.Modified;
+            //refactored
+            //_context.Entry(Applications).State = EntityState.Modified;
+            _unitOfWork.Applicationss.Update(Applications);
 
             try
             {
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
+                await _unitOfWork.Save(HttpContext);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ApplicationsExists(id))
+                //if (!ApplicationsExists(id))
+                if (!await ApplicationsExists(id))
+
                 {
                     return NotFound();
                 }
@@ -78,8 +94,11 @@ namespace JobDex.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Applications>> PostApplications(Applications Applications)
         {
-            _context.Applications.Add(Applications);
-            await _context.SaveChangesAsync();
+
+            //_context.Applicationss.Add(Applications);
+            //await _context.SaveChangesAsync();
+            await _unitOfWork.Applicationss.Insert(Applications);
+            await _unitOfWork.Save(HttpContext);
 
             return CreatedAtAction("GetApplications", new { id = Applications.Id }, Applications);
         }
@@ -88,21 +107,27 @@ namespace JobDex.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteApplications(int id)
         {
-            var Applications = await _context.Applications.FindAsync(id);
+            //var Applications = await _context.Applicationss.FindAsync(id);
+            var Applications = await _unitOfWork.Applicationss.Get(q => q.Id == id);
             if (Applications == null)
             {
                 return NotFound();
             }
 
-            _context.Applications.Remove(Applications);
-            await _context.SaveChangesAsync();
+            //_context.Applicationss.Remove(Applications);
+            //await _context.SaveChangesAsync();
+            await _unitOfWork.Applicationss.Delete(id);
+            await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
-        private bool ApplicationsExists(int id)
+        //private bool ApplicationsExists(int id)
+        private async Task<bool> ApplicationsExists(int id)
         {
-            return _context.Applications.Any(e => e.Id == id);
+            //return _context.Applicationss.Any(e => e.Id == id);
+            var Applications = await _unitOfWork.Applicationss.Get(q => q.Id == id);
+            return Applications != null;
         }
     }
 }

@@ -16,11 +16,12 @@ namespace JobDex.Server.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        private IGenericRepository<UserDetails> _userdetails;
-        private IGenericRepository<StaffDetails> _staffdetails;
+        private IGenericRepository<UserDetails> _userDetails;
+        private IGenericRepository<StaffDetails> _staffDetails;
         private IGenericRepository<Applications> _applications;
         private IGenericRepository<Company> _companies;
         private IGenericRepository<Jobs> _jobs;
+
 
         private UserManager<ApplicationUser> _userManager;
 
@@ -30,23 +31,16 @@ namespace JobDex.Server.Repository
             _userManager = userManager;
         }
 
-        public IGenericRepository<UserDetails> UserDetail
-            => _userdetails ??= new GenericRepository<UserDetails>(_context);
-        public IGenericRepository<StaffDetails> StaffDetail
-            => _staffdetails ??= new GenericRepository<StaffDetails>(_context);
-        public IGenericRepository<Applications> Application
+        public IGenericRepository<UserDetails> UserDetailss
+            => _userDetails ??= new GenericRepository<UserDetails>(_context);
+        public IGenericRepository<StaffDetails> StaffDetailss
+            => _staffDetails ??= new GenericRepository<StaffDetails>(_context);
+        public IGenericRepository<Applications> Applicationss
             => _applications ??= new GenericRepository<Applications>(_context);
-        public IGenericRepository<Company> Company
-           => _companies ??= new GenericRepository<Company>(_context);
-        public IGenericRepository<Jobs> Job
-           => _jobs ??= new GenericRepository<Jobs>(_context);
-
-        public IGenericRepository<UserDetails> UserDetails => throw new NotImplementedException();
-        public IGenericRepository<StaffDetails> StaffDetails => throw new NotImplementedException();
-        public IGenericRepository<Applications> Applications => throw new NotImplementedException();
-        public IGenericRepository<Company> Companies => throw new NotImplementedException();
-        public IGenericRepository<Jobs> Jobs => throw new NotImplementedException();
-
+        public IGenericRepository<Company> Companiess
+            => _companies ??= new GenericRepository<Company>(_context);
+        public IGenericRepository<Jobs> Jobss
+            => _jobs ??= new GenericRepository<Jobs>(_context);
 
         public void Dispose()
         {
