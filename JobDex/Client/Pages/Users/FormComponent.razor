@@ -1,4 +1,6 @@
-﻿<EditForm Model="@userDetail" OnValidSubmit="@OnValidSubmit">
+﻿@using JobDex.Client.Components
+
+<EditForm Model="@userDetail" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <fieldset disabled="@Disabled">
@@ -23,25 +25,24 @@
                 <ValidationMessage For="@(() => userDetail.UserNo)" />
             </div>
         </div>
-
     </fieldset>
-    
-    @if (!Disabled)
-     {
-         <button type="submit" class="btn btn-success btn-block">
-             @ButtonText
-         </button>
-     }
 
 
-    <button type="submit" class="btn btn-success btn-block">
-        @ButtonText
-    </button>
-    <BackToList Target="userDetails" />
+
+
+        @if (!Disabled)
+        {
+            <button type="submit" class="btn btn-success btn-block">
+                @ButtonText
+            </button>
+        }
+
+        <BackToList Target="userDetails" />
 
 </EditForm>
 
 @code {
+    [Parameter] public bool Disabled { get; set; } = false;
     [Parameter] public UserDetails userDetail { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }

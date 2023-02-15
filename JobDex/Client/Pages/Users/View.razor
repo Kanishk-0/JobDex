@@ -6,9 +6,10 @@
 @code {
     [Parameter] public int id { get; set; }
     UserDetails userDetail = new UserDetails();
+
     protected async override Task OnParametersSetAsync()
     {
         userDetail = await
-       _client.GetFromJsonAsync<UserDetails>($"{Endpoints.UserDetailsEndpoint}/{id}");
+_client.GetFromJsonAsync<UserDetails>($"{Endpoints.UserDetailsEndpoint}/{id}");
     }
 }

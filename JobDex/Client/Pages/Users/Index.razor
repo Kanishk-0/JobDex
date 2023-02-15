@@ -1,5 +1,7 @@
 ﻿@page "/userdetails/"
 @inject HttpClient _client
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 @inject IJSRuntime js
 @attribute [Authorize]
 
@@ -61,6 +63,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         UserDetails = await _client.GetFromJsonAsync<List<UserDetails>>($"{Endpoints.UserDetailsEndpoint}");
 
     }
@@ -75,6 +78,11 @@ else
             await OnInitializedAsync();
 
         }
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 
 

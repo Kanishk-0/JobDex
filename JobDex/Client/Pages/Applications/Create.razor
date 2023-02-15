@@ -1,0 +1,50 @@
+﻿@page "/applications/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Add new Application</h3>
+<hr />
+<br />
+
+<EditForm Model="@applications" OnValidSubmit="CreateApplication">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>User ID: </label>
+        <div>
+            <InputNumber @bind-Value="applications.UserDetailsId" class="form-control" />
+            <ValidationMessage For="@(() => applications.UserDetailsId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Staff ID: </label>
+        <div>
+            <InputNumber @bind-Value="applications.StaffDetailsId" class="form-control" />
+            <ValidationMessage For="@(() => applications.StaffDetailsId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Job ID: </label>
+        <div>
+            <InputNumber @bind-Value="applications.JobsId" class="form-control" />
+            <ValidationMessage For="@(() => applications.JobsId)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Add Application
+    </button>
+
+
+</EditForm>
+
+@code {
+    Applications applications = new Applications();
+
+    private async Task CreateApplication()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ApplicationsEndpoint, applications);
+        _navManager.NavigateTo("/applications/");
+    }
+}

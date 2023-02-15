@@ -1,0 +1,49 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@applications" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>User ID: </label>
+        <div>
+            <InputNumber @bind-Value="applications.UserDetailsId" class="form-control" />
+            <ValidationMessage For="@(() => applications.UserDetailsId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Staff ID: </label>
+        <div>
+            <InputNumber @bind-Value="applications.StaffDetailsId" class="form-control" />
+            <ValidationMessage For="@(() => applications.StaffDetailsId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Job ID: </label>
+        <div>
+            <InputNumber @bind-Value="applications.JobsId" class="form-control" />
+            <ValidationMessage For="@(() => applications.JobsId)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        @ButtonText
+    </button>
+
+
+</EditForm>
+
+@code {
+    [Parameter] public Applications applications { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<UserDetails> userDetails;
+    private IList<Jobs> Jobs;
+
+    protected async override Task OnInitializedAsync()
+    {
+        userDetails = await _client.GetFromJsonAsync<List<UserDetails>>($"Endpoints.UserDetailsEndpoint");
+        Jobs = await _client.GetFromJsonAsync<List<Jobs>>($"Endpoints.JobsEndpoint");
+    }
+}
